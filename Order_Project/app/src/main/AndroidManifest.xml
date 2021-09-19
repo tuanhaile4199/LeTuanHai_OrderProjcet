@@ -11,9 +11,6 @@
         android:theme="@style/Theme.Order_LeTuanHai">
 
         <activity
-            android:name=".ShowProductActivity"
-            android:exported="true" />
-        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

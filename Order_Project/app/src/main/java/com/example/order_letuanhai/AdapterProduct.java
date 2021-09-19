@@ -1,5 +1,7 @@
 package com.example.order_letuanhai;
 
+import android.databinding.DataBindingUtil;
+import android.databinding.adapters.AdapterViewBindingAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +36,7 @@ public class AdapterProduct extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         LayoutInflater layoutInflater = LayoutInflater.from(viewGroup.getContext());
-        View view1 = layoutInflater.inflate(R.layout.item_product, viewGroup, false);
+        View view1 = layoutInflater.inflate(R.layout.item_product,viewGroup,false);
 
         TextView tvName = view1.findViewById(R.id.tvName);
         TextView tvAmount = view1.findViewById(R.id.tvItemAmount);

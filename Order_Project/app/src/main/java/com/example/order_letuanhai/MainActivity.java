@@ -1,9 +1,15 @@
 package com.example.order_letuanhai;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -18,32 +24,28 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    TextView tvAmount, tvPrice, tvItemAmount, tvNameWelcome;
+    Integer amount = 0;
+    View btnCart;
     Button btnOrder;
     ListView lvOrder;
+    TextView tvPrice, tvAmount;
     List<Product> products;
     Product product1, product2, product3, product4, product5, product6;
     AdapterProduct adapterProduct1;
-    View btnCart;
-    Double totalPrice;
     int numberPosition = 0;
-    Integer amount = 0;
+    Double totalPrice;
     int amountItem = 0;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-        lvOrder = findViewById(R.id.lvOrder);
         btnCart = findViewById(R.id.btnCart);
+        lvOrder = findViewById(R.id.lvOrder);
+        tvPrice = findViewById(R.id.tvPrice);
         tvAmount = findViewById(R.id.tvAmount);
         btnOrder = findViewById(R.id.btnOrder);
-        tvPrice = findViewById(R.id.tvPrice);
-        tvItemAmount = findViewById(R.id.tvItemAmount);
-        tvNameWelcome = findViewById(R.id.tvNameWelcome);
 
         products = new ArrayList<>();
 
@@ -65,20 +67,6 @@ public class MainActivity extends AppCompatActivity {
         adapterProduct1 = new AdapterProduct(products);
         lvOrder.setAdapter(adapterProduct1);
 
-
-        btnOrder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (amount == 0) {
-                    Toast.makeText(getBaseContext(), "Ban chua chon mon an", Toast.LENGTH_SHORT).show();
-                } else {
-                    recreate();
-                    Toast.makeText(getBaseContext(), "Thank you! Your order is sent to restaurant!", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-
-
         lvOrder.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -92,24 +80,43 @@ public class MainActivity extends AppCompatActivity {
                 products.get(i).setAmount(amountItem);
 
                 numberPosition = i;
+
             }
         });
-
 
         btnCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (amount == 0) {
                     Toast.makeText(getBaseContext(), "Ban chua chon mon an", Toast.LENGTH_SHORT).show();
-                } else {
+                }
+                else {
+
                     Integer amountShowItem = products.get(numberPosition).getAmount();
-                    Intent intent = new Intent(getBaseContext(), ShowProductActivity.class);
+                    Intent intent = new Intent(getBaseContext(), ShowOrder.class);
                     intent.putExtra("amount", amountShowItem.toString());
                     intent.putExtra("price", totalPrice.toString());
                     intent.putExtra("list", (Serializable) products);
+
                     startActivity(intent);
                 }
             }
+
         });
+
+        btnOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (amount == 0) {
+                    Toast.makeText(getBaseContext(), "Ban chua chon mon an", Toast.LENGTH_SHORT).show();
+                } else {
+                    recreate();
+                    Toast.makeText(getBaseContext(), "Thank you! Your order is sent to restaurant!", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
     }
+
+
 }
